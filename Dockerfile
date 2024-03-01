@@ -764,7 +764,7 @@ ARG TARGETARCH
 RUN --mount=type=cache,target=/.cache GOOS=linux GOARCH=${TARGETARCH} go build ${GO_BUILDFLAGS} -ldflags "${GO_LDFLAGS}" -o /installer
 RUN chmod +x /installer
 
-FROM alpine:3.18.4 AS unicode-pf2
+FROM alpine:3.19.1 AS unicode-pf2
 RUN apk add --no-cache --update --no-scripts grub
 
 FROM scratch AS install-artifacts-amd64
@@ -791,7 +791,7 @@ FROM install-artifacts-${TARGETARCH} AS install-artifacts-targetarch
 
 FROM install-artifacts-${INSTALLER_ARCH} AS install-artifacts
 
-FROM alpine:3.18.4 AS installer-image
+FROM alpine:3.19.1 AS installer-image
 ARG SOURCE_DATE_EPOCH
 ENV SOURCE_DATE_EPOCH ${SOURCE_DATE_EPOCH}
 RUN apk add --no-cache --update --no-scripts \
@@ -966,7 +966,7 @@ RUN --mount=type=cache,target=/.cache prototool break check --descriptor-set-pat
 
 # The markdownlint target performs linting on Markdown files.
 
-FROM node:21.6.1-alpine AS lint-markdown
+FROM node:21.6.2-alpine AS lint-markdown
 ARG MARKDOWNLINTCLI_VERSION
 ARG TEXTLINT_VERSION
 ARG TEXTLINT_FILTER_RULE_COMMENTS_VERSION
